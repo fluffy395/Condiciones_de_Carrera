@@ -8,9 +8,15 @@ public class Prueba_Cola_Impresion {
         procesoA.setName("A");
         Thread procesoB = new Thread(cola_impresionX);
         procesoB.setName("B");
-        // Solo se arranca el hilo A
+        // Se arrancan ambos hilos
         procesoA.start();
+        try {
+            procesoA.join();
+        } catch (InterruptedException e) {
+            System.out.println("Hilo principal interrumpido");
+        }
         procesoB.start();
+        
         // Hacer que el programa principal pueda continuar hasta
         // que se hayan ejecutado sus hilos hijo
         do {
@@ -19,7 +25,7 @@ public class Prueba_Cola_Impresion {
             } catch (InterruptedException e) {
                 System.out.println("Hilo principal interrumpido");
             }
-        } while (procesoA.isAlive() || procesoB.isAlive());
+        } while (procesoA.isAlive());
         // Se imprime el contenido de los primeros elementos de la cola de impresion
         System.out.println("-----------------------------");
         for (int i = 0; i < 10; i++) {
